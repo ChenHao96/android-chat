@@ -76,6 +76,24 @@ public class JavaScriptComponent {
         }
     }
 
+    @JavascriptInterface
+    public String getDevice() {
+        // TODO:
+        return "";
+    }
+
+    @JavascriptInterface
+    public String getDeviceId() {
+        // TODO:
+        return "";
+    }
+
+    @JavascriptInterface
+    public String getPlatform() {
+        // TODO:
+        return "";
+    }
+
     // NoJavascriptInterface
     public void clickBack() {
         webView.loadUrl(String.format("javascript:window.%s.clickBack();", JS_COMPONENT_NAME));
