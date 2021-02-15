@@ -12,13 +12,15 @@ public class MainActivity extends AppCompatActivity {
 
     private JavaScriptComponent javaScriptComponent;
 
+    private WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        WebView webView = findViewById(R.id.pageView);
+        webView = findViewById(R.id.pageView);
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -77,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         Toast.makeText(getApplicationContext(), "退出程序", Toast.LENGTH_SHORT).show();
+        this.javaScriptComponent = null;
+        this.webView.destroy();
+        this.webView = null;
         super.onDestroy();
     }
 }

@@ -10,4 +10,8 @@ public class Constant {
     public static final String WEB_SOCKET_URL = "ws" + PROTOCOL.substring(4) + "://" + HOST + "/ws";
 
     public static final int EXIT_APPLICATION_CODE = 0;
+
+    public static final String SCREEN_ORIENTATION_LANDSCAPE ="landscape";
+
+    public static final String SCREEN_ORIENTATION_PORTRAIT ="portrait";
 }

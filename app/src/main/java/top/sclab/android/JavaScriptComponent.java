@@ -33,10 +33,13 @@ public class JavaScriptComponent {
     @JavascriptInterface
     @SuppressLint("SourceLockedOrientationActivity")
     public void screenOrientation(String orientation) {
-        if ("landscape".equals(orientation)) {
-            context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else {
-            context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        switch (orientation) {
+            case Constant.SCREEN_ORIENTATION_LANDSCAPE:
+                context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                break;
+            case Constant.SCREEN_ORIENTATION_PORTRAIT:
+            default:
+                context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
 
@@ -45,7 +48,6 @@ public class JavaScriptComponent {
         context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("reloadApplication");
                 webView.loadUrl(Constant.APPLICATION_URL);
             }
         });
