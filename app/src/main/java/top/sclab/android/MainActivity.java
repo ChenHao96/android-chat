@@ -32,13 +32,10 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setBuiltInZoomControls(false);
         webSettings.setDisplayZoomControls(false);
 
-        webSettings.setAllowFileAccess(true);
-        webSettings.setAllowContentAccess(true);
-
         webView.loadUrl(Constant.APPLICATION_URL);
         webView.setWebViewClient(new WebViewClient() {
 
-            private static final String FAIL_PAGE_PATH = "file:///android_asset/www/requestFail.html";
+            private static final String FAIL_PAGE_PATH = "";//file:///android_asset/www/requestFail.html";
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {

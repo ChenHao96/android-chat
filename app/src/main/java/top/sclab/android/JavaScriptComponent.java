@@ -57,7 +57,9 @@ public class JavaScriptComponent {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            isExit = false;
+            if (msg.what == Constant.EXIT_APPLICATION_CODE) {
+                isExit = false;
+            }
         }
     };
 
@@ -66,7 +68,7 @@ public class JavaScriptComponent {
         if (!isExit) {
             isExit = true;
             Toast.makeText(context.getApplicationContext(), "再按一次后退键退出程序", Toast.LENGTH_SHORT).show();
-            mHandler.sendEmptyMessageDelayed(0, 2000);
+            mHandler.sendEmptyMessageDelayed(Constant.EXIT_APPLICATION_CODE, 2000);
         } else {
             context.finish();
         }
