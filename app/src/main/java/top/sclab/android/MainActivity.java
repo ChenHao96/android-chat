@@ -3,6 +3,7 @@ package top.sclab.android;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.*;
 import android.widget.Toast;
@@ -10,9 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = MainActivity.class.getName();
+
     private JavaScriptComponent javaScriptComponent;
 
     private WebView webView;
+
+    private volatile boolean loadPageSuccess = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     return;
                 }
+                loadPageSuccess = false;
                 view.loadUrl(FAIL_PAGE_PATH);
             }
 
@@ -52,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
                 if (request.isForMainFrame()) {
+                    loadPageSuccess = false;
                     view.loadUrl(FAIL_PAGE_PATH);
                 }
             }
@@ -61,10 +68,21 @@ public class MainActivity extends AppCompatActivity {
                 super.onReceivedHttpError(view, request, errorResponse);
                 int statusCode = errorResponse.getStatusCode();
                 if (404 == statusCode || 500 == statusCode) {
+                    loadPageSuccess = false;
                     view.loadUrl(FAIL_PAGE_PATH);
                 }
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (!loadPageSuccess) {
+            Log.d(TAG, "application restart.");
+            webView.loadUrl(Constant.APPLICATION_URL);
+            this.loadPageSuccess = true;
+        }
     }
 
     @Override
